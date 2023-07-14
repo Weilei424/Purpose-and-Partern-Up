@@ -1,4 +1,9 @@
 package com.masonwang.pnp.service;
 
-public class TeamServiceImpl {
+import com.masonwang.pnp.repository.TeamRepository;
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public class TeamServiceImpl implements TeamService {
+    private TeamRepository teamRepository;
 }
