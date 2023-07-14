@@ -1,4 +1,4 @@
 package com.masonwang.pnp.web;
 
-public class Purpose {
+public class PurposeControll {
 }
