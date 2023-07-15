@@ -1,6 +1,6 @@
 package com.masonwang.pnp.web;
 
-import com.masonwang.pnp.service.PurposeService;
+import com.masonwang.pnp.service.ProposalService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/purpose")
 public class PurposeController {
-    private PurposeService purposeService;
+    private ProposalService proposalService;
 }
