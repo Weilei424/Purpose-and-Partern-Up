@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.xml.crypto.KeySelector;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -41,5 +42,15 @@ public class PurposeController {
     @GetMapping("/all")
     public ResponseEntity<List<Proposal>> getProposal() {
         return new ResponseEntity<>(proposalService.getProposals(), HttpStatus.OK);
+    }
+
+    @GetMapping("/team/{id}/all")
+    public ResponseEntity<Set<Proposal>> getTeamProposals(@PathVariable Long id) {
+        return new ResponseEntity<>(proposalService.getTeamProposals(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{id}/all")
+    public ResponseEntity<Set<Proposal>> getUserProposals(@PathVariable Long id) {
+        return new ResponseEntity<>(proposalService.getUserProposals(id), HttpStatus.OK);
     }
 }
