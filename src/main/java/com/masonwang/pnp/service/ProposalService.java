@@ -9,7 +9,7 @@ import java.util.Set;
 @Service
 public interface ProposalService {
     Proposal getProposal(Long id);
-    Proposal saveProposal(Proposal proposal);
+    Proposal saveProposal(Long userId, Proposal proposal);
     void deleteProposal(Long id);
     Proposal updateProposal(Long id, Proposal proposal);
     List<Proposal> getProposals();
