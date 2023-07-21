@@ -18,12 +18,14 @@ public class ProposalServiceImpl implements ProposalService {
     }
 
     @Override
-    public Proposal saveProposal(Proposal proposal) {
+    public Proposal saveProposal(Long userId, Proposal proposal) {
+        //todo: check if userId exist and add proposal to user.
         return proposalRepository.save(proposal);
     }
 
     @Override
     public void deleteProposal(Long id) {
+        //todo: security check?
         proposalRepository.deleteById(id);
     }
 

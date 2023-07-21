@@ -22,9 +22,9 @@ public class PurposeController {
         return new ResponseEntity<>(proposalService.getProposal(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Proposal> saveProposal(@RequestBody Proposal proposal) {
-        return new ResponseEntity<>(proposalService.saveProposal(proposal), HttpStatus.CREATED);
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @RequestBody Proposal proposal) {
+        return new ResponseEntity<>(proposalService.saveProposal(userId, proposal), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
