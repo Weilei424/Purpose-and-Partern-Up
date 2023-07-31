@@ -22,12 +22,12 @@ public class User {
 
     @NotBlank(message =  "username cannot be blank")
     @NonNull
-    @Column(nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @NotBlank(message =  "password cannot be blank")
     @NonNull
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @JsonIgnore
