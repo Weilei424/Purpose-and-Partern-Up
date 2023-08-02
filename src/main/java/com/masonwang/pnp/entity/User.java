@@ -20,25 +20,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message =  "username cannot be blank")
+    @NotBlank(message = "username cannot be blank")
     @NonNull
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @NotBlank(message =  "password cannot be blank")
+    @NotBlank(message = "password cannot be blank")
     @NonNull
     @Column(name = "password", nullable = false)
     private String password;
 
     @JsonIgnore
-    List<Proposal> proposals;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Proposal> proposals;
 
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "user_team",
+            name = "team_user",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id")
     )
-    Set<Team> teams;
+    private Set<Team> teams;
 }

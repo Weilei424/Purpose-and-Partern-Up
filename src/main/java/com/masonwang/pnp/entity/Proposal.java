@@ -26,7 +26,7 @@ public class Proposal {
     @Column(name = "description")
     private String decription;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private List<User> users;
+    private User user;
 }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
-@Service
 public interface ProposalService {
     Proposal getProposal(Long id);
     Proposal saveProposal(Long userId, Proposal proposal);

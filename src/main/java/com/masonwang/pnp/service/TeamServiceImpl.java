@@ -3,8 +3,12 @@ package com.masonwang.pnp.service;
 import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.repository.TeamRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@NoArgsConstructor
 @AllArgsConstructor
+@Service
 public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
 

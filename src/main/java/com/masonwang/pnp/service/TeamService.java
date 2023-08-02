@@ -3,7 +3,6 @@ package com.masonwang.pnp.service;
 import com.masonwang.pnp.entity.Team;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface TeamService {
     Team getTeam(Long id);
     Team saveTeam(Team team);
