@@ -12,7 +12,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/purpose")
+@RequestMapping("/proposal")
 public class ProposalController {
     private ProposalService proposalService;
 
