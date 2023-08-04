@@ -7,14 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.KeySelector;
 import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/purpose")
-public class PurposeController {
+public class ProposalController {
     private ProposalService proposalService;
 
     @GetMapping("/{id}")
