@@ -6,6 +6,7 @@ import com.masonwang.pnp.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
     User getUser(Long id);
@@ -13,6 +14,6 @@ public interface UserService {
     User updateUser(Long id, User user);
     void deleteUser(Long id);
     List<User> getUsers();
-    List<Team> getUserTeams(Long id);
-    List<Proposal> getUserProposals(Long id);
+    Set<Team> getUserTeams(Long id);
+    Set<Proposal> getUserProposals(Long id);
 }

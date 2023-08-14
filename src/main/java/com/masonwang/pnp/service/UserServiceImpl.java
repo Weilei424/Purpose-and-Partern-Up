@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,12 +46,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Team> getUserTeams(Long id) {
+    public Set<Team> getUserTeams(Long id) {
         return null;
     }
 
     @Override
-    public List<Proposal> getUserProposals(Long id) {
+    public Set<Proposal> getUserProposals(Long id) {
         return null;
     }
 
