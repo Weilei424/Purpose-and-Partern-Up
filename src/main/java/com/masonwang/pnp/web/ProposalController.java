@@ -39,7 +39,7 @@ public class ProposalController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Proposal>> getProposal() {
+    public ResponseEntity<List<Proposal>> getProposals() {
         return new ResponseEntity<>(proposalService.getProposals(), HttpStatus.OK);
     }
 
