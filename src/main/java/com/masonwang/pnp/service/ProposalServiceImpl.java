@@ -42,8 +42,11 @@ public class ProposalServiceImpl implements ProposalService {
 
     @Override
     public Proposal updateProposal(Long id, Proposal proposal) {
-        //todo
-        return null;
+        Proposal p = unwrapProposal(proposalRepository.findById(id), id);
+        p.setDecription(proposal.getDecription());
+        p.setName(proposal.getName());
+        p.setUser(proposal.getUser());
+        return proposalRepository.save(p);
     }
 
     @Override
