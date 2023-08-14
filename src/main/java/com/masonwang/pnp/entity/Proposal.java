@@ -2,12 +2,12 @@ package com.masonwang.pnp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @RequiredArgsConstructor
 @NoArgsConstructor
