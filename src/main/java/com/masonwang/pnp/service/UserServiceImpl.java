@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
@@ -37,21 +37,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-
+        userRepository.deleteById(id);
     }
 
     @Override
     public List<User> getUsers() {
-        return null;
+        return (List<User>) userRepository.findAll();
     }
 
     @Override
     public Set<Team> getUserTeams(Long id) {
+        //todo
         return null;
     }
 
     @Override
     public Set<Proposal> getUserProposals(Long id) {
+        //todo
         return null;
     }
 
