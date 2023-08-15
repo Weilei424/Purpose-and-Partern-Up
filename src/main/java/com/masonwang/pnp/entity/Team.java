@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -33,4 +34,8 @@ public class Team {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
     )
     private Set<User> users;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    private List<Proposal> proposals;
 }

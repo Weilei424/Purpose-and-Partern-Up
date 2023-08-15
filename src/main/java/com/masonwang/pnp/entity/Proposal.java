@@ -29,4 +29,8 @@ public class Proposal {
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    private Team team;
 }
