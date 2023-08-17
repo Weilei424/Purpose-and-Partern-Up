@@ -43,9 +43,4 @@ public class ProposalController {
         return new ResponseEntity<>(proposalService.getProposals(), HttpStatus.OK);
     }
 
-    @GetMapping("/team/{id}/all")
-    public ResponseEntity<Set<Proposal>> getTeamProposals(@PathVariable Long id) {
-        return new ResponseEntity<>(proposalService.getTeamProposals(id), HttpStatus.OK);
-    }
-
 }
