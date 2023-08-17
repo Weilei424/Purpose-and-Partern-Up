@@ -1,13 +1,18 @@
 package com.masonwang.pnp.web;
 
+import com.masonwang.pnp.entity.Proposal;
 import com.masonwang.pnp.entity.Team;
+import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.service.TeamService;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -42,5 +47,13 @@ public class TeamController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/proposals")
+    public ResponseEntity<List<Proposal>> getTeamProposals(@PathVariable Long id) {
+        return new ResponseEntity<>(teamService.getTeamProposals(id), HttpStatus.OK);
+    }
 
+    @GetMapping("/{id}/users")
+    public ResponseEntity<Set<User>> getTeamUsers(@PathVariable Long id) {
+        return new ResponseEntity<>(teamService.getTeamUsers(id), HttpStatus.OK);
+    }
 }

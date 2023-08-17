@@ -15,6 +15,6 @@ public interface TeamService {
     Team updateTeam(Long id, Team team);
     Team addMember(Long teamId, Long userId);
     void deleteMember(Long teamId, Long userId);
-    List<Proposal> getTeamProposals();
-    Set<User> getTeamUsers();
+    List<Proposal> getTeamProposals(Long id);
+    Set<User> getTeamUsers(Long id);
 }
