@@ -45,12 +45,17 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Proposal> getTeamProposals() {
+    public void deleteMember(Long teamId, Long userId) {
+
+    }
+
+    @Override
+    public List<Proposal> getTeamProposals(Long id) {
         return null;
     }
 
     @Override
-    public Set<User> getTeamUsers() {
+    public Set<User> getTeamUsers(Long id) {
         return null;
     }
 
