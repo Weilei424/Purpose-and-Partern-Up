@@ -12,6 +12,4 @@ public interface ProposalService {
     void deleteProposal(Long id);
     Proposal updateProposal(Long id, Proposal proposal);
     List<Proposal> getProposals();
-    Set<Proposal> getTeamProposals(Long teamId);
-    Set<Proposal> getUserProposals(Long userId);
 }

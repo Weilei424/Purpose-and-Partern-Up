@@ -54,18 +54,6 @@ public class ProposalServiceImpl implements ProposalService {
         return (List<Proposal>) proposalRepository.findAll();
     }
 
-    @Override
-    public Set<Proposal> getTeamProposals(Long teamId) {
-        //todo
-        return null;
-    }
-
-    @Override
-    public Set<Proposal> getUserProposals(Long userId) {
-        //todo
-        return null;
-    }
-
     static Proposal unwrapProposal(Optional<Proposal> entity, Long id) {
         if (entity.isPresent()) return entity.get();
         else throw new EntityNotFoundException(id, Proposal.class);
