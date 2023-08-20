@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Long id, User user) {
-        User u = unwrapUser(userRepository.findById(id), id);
+        User u = getUser(id);
         u.setUsername(user.getUsername());
         u.setPassword(user.getPassword());
         return userRepository.save(u);
@@ -50,14 +50,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Set<Team> getUserTeams(Long id) {
-        User u = getUser(id);
-        return u.getTeams();
+        User user = getUser(id);
+        return user.getTeams();
     }
 
     @Override
     public List<Proposal> getUserProposals(Long id) {
-        User u = getUser(id);
-        return u.getProposals();
+        User user = getUser(id);
+        return user.getProposals();
     }
 
     static User unwrapUser(Optional<User> entity, Long id) {
