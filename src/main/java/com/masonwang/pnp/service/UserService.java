@@ -15,5 +15,5 @@ public interface UserService {
     void deleteUser(Long id);
     List<User> getUsers();
     Set<Team> getUserTeams(Long id);
-    Set<Proposal> getUserProposals(Long id);
+    List<Proposal> getUserProposals(Long id);
 }
