@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/proposals")
-    public ResponseEntity<Set<Proposal>> getUserProposals(@PathVariable Long id) {
+    public ResponseEntity<List<Proposal>> getUserProposals(@PathVariable Long id) {
         return new ResponseEntity<>(userService.getUserProposals(id), HttpStatus.OK);
     }
 }
