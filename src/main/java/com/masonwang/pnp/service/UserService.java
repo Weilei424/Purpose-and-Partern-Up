@@ -10,6 +10,7 @@ import java.util.Set;
 
 public interface UserService {
     User getUser(Long id);
+    User getUser(String username);
     User saveUser(User user);
     User updateUser(Long id, User user);
     void deleteUser(Long id);
