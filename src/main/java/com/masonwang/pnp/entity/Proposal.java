@@ -1,10 +1,7 @@
 package com.masonwang.pnp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -24,7 +21,7 @@ public class Proposal {
     private String name;
 
     @Column(name = "description")
-    private String decription;
+    private String description;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

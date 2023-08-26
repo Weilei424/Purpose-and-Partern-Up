@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,7 +42,7 @@ public class ProposalServiceImpl implements ProposalService {
     @Override
     public Proposal updateProposal(Long id, Proposal proposal) {
         Proposal p = unwrapProposal(proposalRepository.findById(id), id);
-        p.setDecription(proposal.getDecription());
+        p.setDescription(proposal.getDescription());
         p.setName(proposal.getName());
         p.setUser(proposal.getUser());
         return proposalRepository.save(p);
