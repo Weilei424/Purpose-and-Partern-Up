@@ -10,6 +10,7 @@ import java.util.Set;
 
 public interface TeamService {
     Team getTeam(Long id);
+    Team getTeam(String teamName);
     Team saveTeam(Team team);
     void deleteTeam(Long id);
     Team updateTeam(Long id, Team team);

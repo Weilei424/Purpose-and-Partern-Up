@@ -28,6 +28,12 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public Team getTeam(String teamName) {
+        Optional<Team> team = teamRepository.findByName(teamName);
+        return unwrapTeam(team, 404L);
+    }
+
+    @Override
     public Team saveTeam(Team team) {
         return teamRepository.save(team);
     }
