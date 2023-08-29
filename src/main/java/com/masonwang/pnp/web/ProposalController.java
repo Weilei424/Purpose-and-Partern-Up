@@ -21,9 +21,9 @@ public class ProposalController {
         return new ResponseEntity<>(proposalService.getProposal(id), HttpStatus.OK);
     }
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @RequestBody Proposal proposal) {
-        return new ResponseEntity<>(proposalService.saveProposal(userId, proposal), HttpStatus.CREATED);
+    @PostMapping("/user/{userId}/team/{teamId}")
+    public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @PathVariable Long teamId, @RequestBody Proposal proposal) {
+        return new ResponseEntity<>(proposalService.saveProposal(userId, teamId, proposal), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -50,6 +50,7 @@ public class ProposalController {
 
     @PutMapping("/{id}/team")
     public ResponseEntity<Proposal> updateProposalTeam(@PathVariable Long id, @RequestBody Proposal proposal) {
+        //todo unfinished
         return new ResponseEntity<>(proposalService.updateProposalTeam(id, proposal.getTeam()), HttpStatus.OK);
     }
 
