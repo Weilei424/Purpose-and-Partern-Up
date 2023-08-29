@@ -5,21 +5,21 @@ import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.exception.EntityNotFoundException;
 import com.masonwang.pnp.repository.ProposalRepository;
+import com.masonwang.pnp.repository.TeamRepository;
 import com.masonwang.pnp.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Service
 public class ProposalServiceImpl implements ProposalService {
 
     private ProposalRepository proposalRepository;
     private UserRepository userRepository;
+    private TeamRepository teamRepository;
 
     @Override
     public Proposal getProposal(Long id) {
@@ -28,9 +28,13 @@ public class ProposalServiceImpl implements ProposalService {
     }
 
     @Override
-    public Proposal saveProposal(Long userId, Proposal proposal) {
+    public Proposal saveProposal(Long userId, Long teamId, Proposal proposal) {
         User user = UserServiceImpl.unwrapUser(userRepository.findById(userId), userId);
+        Team team = TeamServiceImpl.unwrapTeam(teamRepository.findById(teamId), teamId);
         user.getProposals().add(proposal);
+        team.getProposals().add(proposal);
+        proposal.setUser(user);
+        proposal.setTeam(team);
         return proposalRepository.save(proposal);
     }
 
