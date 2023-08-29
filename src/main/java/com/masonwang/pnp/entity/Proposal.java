@@ -1,5 +1,6 @@
 package com.masonwang.pnp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,10 +24,12 @@ public class Proposal {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
