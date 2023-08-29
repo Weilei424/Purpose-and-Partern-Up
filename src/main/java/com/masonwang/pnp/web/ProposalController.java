@@ -38,6 +38,21 @@ public class ProposalController {
         return new ResponseEntity<>(proposalService.updateProposal(id, proposal), HttpStatus.OK);
     }
 
+    @PutMapping("/{id}/name")
+    public ResponseEntity<Proposal> updateProposalName(@PathVariable Long id, @RequestBody Proposal proposal) {
+        return new ResponseEntity<>(proposalService.updateProposalName(id, proposal.getName()), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/description")
+    public ResponseEntity<Proposal> updateProposalDescription(@PathVariable Long id, @RequestBody Proposal proposal) {
+        return new ResponseEntity<>(proposalService.updateProposalDescription(id, proposal.getDescription()), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/team")
+    public ResponseEntity<Proposal> updateProposalTeam(@PathVariable Long id, @RequestBody Proposal proposal) {
+        return new ResponseEntity<>(proposalService.updateProposalTeam(id, proposal.getTeam()), HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<Proposal>> getProposals() {
         return new ResponseEntity<>(proposalService.getProposals(), HttpStatus.OK);
