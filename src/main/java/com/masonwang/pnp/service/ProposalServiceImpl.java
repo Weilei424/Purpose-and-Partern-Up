@@ -1,6 +1,7 @@
 package com.masonwang.pnp.service;
 
 import com.masonwang.pnp.entity.Proposal;
+import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.exception.EntityNotFoundException;
 import com.masonwang.pnp.repository.ProposalRepository;
@@ -44,7 +45,28 @@ public class ProposalServiceImpl implements ProposalService {
         Proposal p = unwrapProposal(proposalRepository.findById(id), id);
         p.setDescription(proposal.getDescription());
         p.setName(proposal.getName());
-        p.setUser(proposal.getUser());
+        p.setTeam(proposal.getTeam());
+        return proposalRepository.save(p);
+    }
+
+    @Override
+    public Proposal updateProposalName(Long id, String name) {
+        Proposal p = unwrapProposal(proposalRepository.findById(id), id);
+        p.setName(name);
+        return proposalRepository.save(p);
+    }
+
+    @Override
+    public Proposal updateProposalDescription(Long id, String description) {
+        Proposal p = unwrapProposal(proposalRepository.findById(id), id);
+        p.setDescription(description);
+        return proposalRepository.save(p);
+    }
+
+    @Override
+    public Proposal updateProposalTeam(Long id, Team team) {
+        Proposal p = unwrapProposal(proposalRepository.findById(id), id);
+        p.setTeam(team);
         return proposalRepository.save(p);
     }
 
