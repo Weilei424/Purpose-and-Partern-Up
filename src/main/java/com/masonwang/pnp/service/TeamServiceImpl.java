@@ -8,14 +8,12 @@ import com.masonwang.pnp.exception.EntityNotFoundException;
 import com.masonwang.pnp.repository.TeamRepository;
 import com.masonwang.pnp.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Service
 public class TeamServiceImpl implements TeamService {
