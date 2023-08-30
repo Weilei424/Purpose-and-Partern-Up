@@ -26,6 +26,9 @@ public class Team {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "Contact")
+    private String contact;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
