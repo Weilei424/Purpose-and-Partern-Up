@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProposalRepository extends CrudRepository<Proposal, Long> {
-    Optional<Proposal> findByUserIdAndTeamId(Long userId, Long teamId);
     List<Proposal> findByUserId(Long userId);
     List<Proposal> findByTeamId(Long teamId);
     @Transactional
-    void deleteByUserIdAndTeamId(Long userId, Long teamId);
+    void deleteByIdAndUserId(Long proposalId, Long userId);
 }
