@@ -33,6 +33,13 @@ public class ProposalController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @DeleteMapping("/{proposalId}/{userId}")
+    public ResponseEntity<HttpStatus> deleteUserProposal(@PathVariable Long proposalId, @PathVariable Long userId) {
+        proposalService.deleteUserProposal(proposalId, userId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Proposal> updateProposal(@PathVariable Long id, @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposal(id, proposal), HttpStatus.OK);
