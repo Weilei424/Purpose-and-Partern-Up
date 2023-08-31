@@ -31,6 +31,8 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @NotBlank(message = "contact info cannot be blank")
+    @NonNull
     @Column(name = "Contact")
     private String contact;
 
