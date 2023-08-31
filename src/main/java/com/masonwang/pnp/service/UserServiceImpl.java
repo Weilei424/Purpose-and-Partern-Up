@@ -4,6 +4,7 @@ import com.masonwang.pnp.entity.Proposal;
 import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.exception.EntityNotFoundException;
+import com.masonwang.pnp.repository.ProposalRepository;
 import com.masonwang.pnp.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
+    private ProposalRepository proposalRepository;
 
     @Override
     public User getUser(Long id) {
@@ -44,6 +46,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateUserPassword(Long id, String password) {
+        User u = getUser(id);
+        u.setPassword(password);
+        return userRepository.save(u);
+    }
+
+    @Override
+    public User updateUserContact(Long id, String contact) {
+        User u = getUser(id);
+        u.setContact(contact);
+        return userRepository.save(u);
+    }
+
+
+    @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
@@ -61,8 +78,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Proposal> getUserProposals(Long id) {
-        User user = getUser(id);
-        return user.getProposals();
+
+        return proposalRepository.findByUserId(id);
     }
 
     static User unwrapUser(Optional<User> entity, Long id) {
