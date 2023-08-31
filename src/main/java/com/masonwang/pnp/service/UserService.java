@@ -10,7 +10,7 @@ import java.util.Set;
 
 public interface UserService {
     User getUser(Long id);
-    User getUser(String username);
+    User getUserByUsername(String username);
     User saveUser(User user);
     User updateUser(Long id, User user);
     User updateUserPassword(Long id, String password);

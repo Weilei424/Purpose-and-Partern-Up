@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String username) {
+    public User getUserByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         return unwrapUser(user, 404L);
     }
@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
         u.setContact(contact);
         return userRepository.save(u);
     }
-
 
     @Override
     public void deleteUser(Long id) {
