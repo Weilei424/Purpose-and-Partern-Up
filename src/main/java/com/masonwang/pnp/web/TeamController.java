@@ -23,15 +23,35 @@ public class TeamController {
         return new ResponseEntity<>(teamService.getTeam(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Team> saveTeam(@RequestBody Team team) {
-        return new ResponseEntity<>(teamService.saveTeam(team), HttpStatus.CREATED);
+    @GetMapping("/{name}")
+    public ResponseEntity<Team> getTeam(@PathVariable String name) {
+        return new ResponseEntity<>(teamService.getTeamByName(name), HttpStatus.OK);
+    }
+
+    @PostMapping("/addBy/{userId}")
+    public ResponseEntity<Team> saveTeam(@PathVariable Long userId, @RequestBody Team team) {
+        return new ResponseEntity<>(teamService.saveTeam(userId, team), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTeam(@PathVariable Long id) {
         teamService.deleteTeam(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team team) {
+        return new ResponseEntity<>(teamService.updateTeam(id, team), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/name")
+    public ResponseEntity<Team> updateTeamName(@PathVariable Long id, @RequestBody Team team) {
+        return new ResponseEntity<>(teamService.updateTeamName(id, team.getName()), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/contact")
+    public ResponseEntity<Team> updateTeamContact(@PathVariable Long id, @RequestBody Team team) {
+        return new ResponseEntity<>(teamService.updateTeamContact(id, team.getContact()), HttpStatus.OK);
     }
 
     @PutMapping("/{teamId}/user/{userId}")
