@@ -28,13 +28,16 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team getTeam(String teamName) {
+    public Team getTeamByName(String teamName) {
         Optional<Team> team = teamRepository.findByName(teamName);
         return unwrapTeam(team, 404L);
     }
 
     @Override
-    public Team saveTeam(Team team) {
+    public Team saveTeam(Long userId, Team team) {
+        User user = UserServiceImpl.unwrapUser(userRepository.findById(userId), userId);
+        team.getUsers().add(user);
+        user.getTeams().add(team);
         return teamRepository.save(team);
     }
 
@@ -47,7 +50,21 @@ public class TeamServiceImpl implements TeamService {
     public Team updateTeam(Long id, Team team) {
         Team t = getTeam(id);
         t.setName(team.getName());
+        t.setContact(team.getContact());
+        return teamRepository.save(t);
+    }
 
+    @Override
+    public Team updateTeamName(Long id, String name) {
+        Team t = getTeam(id);
+        t.setName(name);
+        return teamRepository.save(t);
+    }
+
+    @Override
+    public Team updateTeamContact(Long id, String contact) {
+        Team t = getTeam(id);
+        t.setContact(contact);
         return teamRepository.save(t);
     }
 
