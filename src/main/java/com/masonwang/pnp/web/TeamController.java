@@ -23,8 +23,8 @@ public class TeamController {
         return new ResponseEntity<>(teamService.getTeam(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<Team> getTeam(@PathVariable String name) {
+    @GetMapping("/name")
+    public ResponseEntity<Team> getTeam(@RequestBody String name) {
         return new ResponseEntity<>(teamService.getTeamByName(name), HttpStatus.OK);
     }
 
