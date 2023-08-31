@@ -45,6 +45,11 @@ public class ProposalServiceImpl implements ProposalService {
     }
 
     @Override
+    public void deleteUserProposal(Long proposalId, Long userId) {
+        proposalRepository.deleteByIdAndUserId(proposalId, userId);
+    }
+
+    @Override
     public Proposal updateProposal(Long id, Proposal proposal) {
         Proposal p = unwrapProposal(proposalRepository.findById(id), id);
         p.setDescription(proposal.getDescription());
