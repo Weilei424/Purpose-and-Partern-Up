@@ -5,6 +5,7 @@ import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.exception.EntitiesNotMatchException;
 import com.masonwang.pnp.exception.EntityNotFoundException;
+import com.masonwang.pnp.repository.ProposalRepository;
 import com.masonwang.pnp.repository.TeamRepository;
 import com.masonwang.pnp.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Set;
 public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
     private UserRepository userRepository;
+    private ProposalRepository proposalRepository;
 
     @Override
     public Team getTeam(Long id) {
@@ -68,9 +70,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<Proposal> getTeamProposals(Long id) {
-        Team team = getTeam(id);
-
-        return team.getProposals();
+        return proposalRepository.findByTeamId(id);
     }
 
     @Override
