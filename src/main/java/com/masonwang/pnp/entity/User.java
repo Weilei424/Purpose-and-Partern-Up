@@ -1,6 +1,7 @@
 package com.masonwang.pnp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.masonwang.pnp.validation.Password;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -27,6 +28,7 @@ public class User {
     private String username;
 
     @NotBlank(message = "password cannot be blank")
+    @Password(message = "invalid password, please follow password rules")
     @NonNull
     @Column(name = "password", nullable = false)
     private String password;
