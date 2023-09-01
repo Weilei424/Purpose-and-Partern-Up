@@ -10,10 +10,20 @@ import com.masonwang.pnp.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.HashSet;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@AutoConfigureMockMvc
 @SpringBootTest
 class PnpApplicationTests {
 	@Autowired
@@ -68,18 +78,25 @@ class PnpApplicationTests {
 				new Team("team9"),
 		};
 
-		for (User u : users) {
-			userRepository.save(u);
+		for (int i = 0; i < users.length; i++) {
+			users[i].setId(i + 1L);
+			userRepository.save(users[i]);
 		}
 
 		for (int i = 0; i < teams.length; i++) {
+			teams[i].setId(i + 1L);
+			teams[i].setUsers(new HashSet<>());
 			teams[i].getUsers().add(users[i]);
+			users[i].setTeams(new HashSet<>());
 			users[i].getTeams().add(teams[i]);
 			teamRepository.save(teams[i]);
 		}
 
-		for (Proposal p : proposals) {
-			proposalRepository.save(p);
+		for (int i = 0; i < proposals.length; i++) {
+			proposals[i].setId(i + 1L);
+			proposals[i].setUser(users[i]);
+			proposals[i].setTeam(teams[i]);
+			proposalRepository.save(proposals[i]);
 		}
 	}
 
@@ -93,4 +110,24 @@ class PnpApplicationTests {
 		teams = null;
 		System.gc();
 	}
+
+	//Proposal Controller tests =====================================================
+	@Test
+	void getProposalTest() throws Exception {
+		RequestBuilder request = MockMvcRequestBuilders.get("/proposal/1");
+		mockMvc.perform(request)
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.name").value(proposals[0].getName()));
+	}
+
+	//Proposal Controller tests END =================================================
+
+
+	//User Controller tests =========================================================
+	//User Controller tests END =====================================================
+
+
+	//Team Controller tests =========================================================
+	//Team Controller tests END =====================================================
 }
