@@ -3,7 +3,6 @@ package com.masonwang.pnp.service;
 import com.masonwang.pnp.entity.Proposal;
 import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
