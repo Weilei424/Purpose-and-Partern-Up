@@ -12,7 +12,7 @@ import java.util.List;
  * 2. Must contain last least one lowercase English letter;
  * 3. Must contain last least one number;
  * 4. Must contain last least one symbol from "~`!@#$%^&*()-_+={}[]|;:"<>,./?";
- * 5. Length must not shorter than 8 characters;
+ * 5. Length must not shorter than 8 characters, must not longer than 20 characters;
  */
 public class PasswordValidator implements ConstraintValidator<Password, String> {
 
@@ -21,7 +21,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             '5', '6', '7', '8', '9'
     );
 
-    private static final List<Character> Uppercase = Arrays.asList(
+    private static final List<Character> uppercase = Arrays.asList(
             'A', 'B', 'C', 'D', 'E', 'F', 'G',
             'H', 'I', 'J', 'K', 'L', 'M', 'N',
             'O', 'P', 'Q', 'R', 'S', 'T', 'U',
@@ -40,17 +40,27 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             '=', '{', '}', '[', ']', '|', ';', ':', '"', '<', '>', ',', '.', '/', '?'
     );
 
-    private static final int length = 8;
+    private static final int minLength = 8;
+    private static final int maxLength = 20;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) return false;
-        if (value.length() < length) return false;
+        if (value.length() < minLength || value.length() > maxLength) return false;
+
+        boolean upperFlag = false;
+        boolean lowerFlag = false;
+        boolean numbersFlag = false;
+        boolean symbolFlag = false;
 
         for (char c : value.toCharArray()) {
-
+            if (uppercase.contains(c)) upperFlag = true;
+            if (lowercase.contains(c)) lowerFlag = true;
+            if (numbers.contains(c)) numbersFlag = true;
+            if (symbols.contains(c)) symbolFlag = true;
         }
-        return false;
+
+        return upperFlag && lowerFlag && numbersFlag && symbolFlag;
     }
 
 }
