@@ -36,7 +36,7 @@ public class ProposalController {
 
     @Operation(summary = "Save a proposal", description = "Save proposal with required info")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successful save of the proposal"),
+            @ApiResponse(responseCode = "201", description = "Successful save of the proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
             @ApiResponse(responseCode = "404", description = "Team or/and User id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
     })
     @PostMapping(value = "/user/{userId}/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -65,6 +65,11 @@ public class ProposalController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Operation(summary = "Update a proposal", description = "Update a proposal as a whole proposal(id won't be changed)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated a proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
+            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+    })
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> updateProposal(@PathVariable Long id, @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposal(id, proposal), HttpStatus.OK);
