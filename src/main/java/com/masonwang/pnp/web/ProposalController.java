@@ -26,8 +26,8 @@ public class ProposalController {
 
     @Operation(summary = "Get proposal by id", description = "Return a proposal based on an id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful retrieval of the proposal by id", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
-            @ApiResponse(responseCode = "404", description = "Proposal does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+            @ApiResponse(responseCode = "200", description = "Successful retrieval of the proposal by id", content = @Content(schema = @Schema(implementation = Proposal.class))),
+            @ApiResponse(responseCode = "404", description = "Proposal does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> getProposal(@PathVariable Long id) {
@@ -36,8 +36,8 @@ public class ProposalController {
 
     @Operation(summary = "Save a proposal", description = "Save proposal with required info")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successful save of the proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
-            @ApiResponse(responseCode = "404", description = "Team or/and User id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+            @ApiResponse(responseCode = "201", description = "Successful save of the proposal", content = @Content(schema = @Schema(implementation = Proposal.class))),
+            @ApiResponse(responseCode = "404", description = "Team or/and User id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping(value = "/user/{userId}/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @PathVariable Long teamId, @RequestBody Proposal proposal) {
@@ -56,7 +56,7 @@ public class ProposalController {
     @Operation(summary = "Delete a proposal", description = "Delete a proposal by proposal id and user id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Successful deletion of proposal"),
-            @ApiResponse(responseCode = "404", description = "User id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+            @ApiResponse(responseCode = "404", description = "User id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @DeleteMapping(value = "/{proposalId}/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> deleteUserProposal(@PathVariable Long proposalId, @PathVariable Long userId) {
@@ -67,8 +67,8 @@ public class ProposalController {
 
     @Operation(summary = "Update a proposal", description = "Update a proposal as a whole proposal(id won't be changed)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully updated a proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
-            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+            @ApiResponse(responseCode = "200", description = "Successfully updated a proposal", content = @Content(schema = @Schema(implementation = Proposal.class))),
+            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> updateProposal(@PathVariable Long id, @RequestBody Proposal proposal) {
@@ -77,8 +77,8 @@ public class ProposalController {
 
     @Operation(summary = "Update the name of a proposal", description = "Update the name of a proposal by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully updated the name of the proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
-            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+            @ApiResponse(responseCode = "200", description = "Successfully updated the name of the proposal", content = @Content(schema = @Schema(implementation = Proposal.class))),
+            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/name", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> updateProposalName(@PathVariable Long id, @RequestBody Proposal proposal) {
@@ -87,20 +87,27 @@ public class ProposalController {
 
     @Operation(summary = "Update the description of a proposal", description = "Update the description of a proposal by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully updated the description of the proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
-            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+            @ApiResponse(responseCode = "200", description = "Successfully updated the description of the proposal", content = @Content(schema = @Schema(implementation = Proposal.class))),
+            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/description", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> updateProposalDescription(@PathVariable Long id, @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposalDescription(id, proposal.getDescription()), HttpStatus.OK);
     }
 
+    @Operation(summary = "Update the team of a proposal", description = "Update the team of a proposal by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated the team of the proposal", content = @Content(schema = @Schema(implementation = Proposal.class))),
+            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
     @PutMapping(value = "/{id}/team", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> updateProposalTeam(@PathVariable Long id, @RequestBody Proposal proposal) {
         //todo unfinished
         return new ResponseEntity<>(proposalService.updateProposalTeam(id, proposal.getTeam()), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get all proposals", description = "Get all proposals from the database")
+    @ApiResponse(responseCode = "200", description = "Successful retrieval of all proposal from database", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class))))
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Proposal>> getProposals() {
         return new ResponseEntity<>(proposalService.getProposals(), HttpStatus.OK);
