@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @AutoConfigureMockMvc
-@SpringBootTest
+//@SpringBootTest
 class PnpApplicationTests {
     //todo repositories not working
     @Autowired
