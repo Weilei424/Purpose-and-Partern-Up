@@ -75,11 +75,21 @@ public class ProposalController {
         return new ResponseEntity<>(proposalService.updateProposal(id, proposal), HttpStatus.OK);
     }
 
+    @Operation(summary = "Update the name of a proposal", description = "Update the name of a proposal by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated the name of the proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
+            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+    })
     @PutMapping(value = "/{id}/name", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> updateProposalName(@PathVariable Long id, @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposalName(id, proposal.getName()), HttpStatus.OK);
     }
 
+    @Operation(summary = "Update the description of a proposal", description = "Update the description of a proposal by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated the description of the proposal", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
+            @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+    })
     @PutMapping(value = "/{id}/description", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> updateProposalDescription(@PathVariable Long id, @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposalDescription(id, proposal.getDescription()), HttpStatus.OK);
