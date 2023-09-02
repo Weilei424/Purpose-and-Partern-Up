@@ -2,6 +2,12 @@ package com.masonwang.pnp.web;
 
 import com.masonwang.pnp.entity.Proposal;
 import com.masonwang.pnp.service.ProposalService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +22,11 @@ import java.util.List;
 public class ProposalController {
     private ProposalService proposalService;
 
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Successful retrieval of the proposal by id", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
+            @ApiResponse(responseCode = "404", description = "Proposal does not exist"),
+    })
+    @Operation(summary = "Get proposal by id", description = "Return a proposal based on an id")
     @GetMapping("/{id}")
     public ResponseEntity<Proposal> getProposal(@PathVariable Long id) {
         return new ResponseEntity<>(proposalService.getProposal(id), HttpStatus.OK);
