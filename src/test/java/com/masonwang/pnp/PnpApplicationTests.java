@@ -12,9 +12,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -24,18 +26,20 @@ import java.util.HashSet;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
 @AutoConfigureMockMvc
 @SpringBootTest
 class PnpApplicationTests {
+    //todo repositories not working
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
+    @MockBean
     ProposalRepository proposalRepository;
-    @Autowired
+    @MockBean
     UserRepository userRepository;
-    @Autowired
+    @MockBean
     TeamRepository teamRepository;
 
     private Proposal[] proposals;
@@ -46,6 +50,7 @@ class PnpApplicationTests {
 
     @BeforeEach
     void setup() {
+
         proposals = new Proposal[]{
                 new Proposal("project1"),
                 new Proposal("project2"),
@@ -113,9 +118,12 @@ class PnpApplicationTests {
     }
 
     //Proposal Controller tests =====================================================
+
     @Test
     void getProposalTest() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.get("/proposal/1");
+        System.out.println(proposals[0].getName());
+        System.out.println(proposalRepository.count());
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -129,7 +137,7 @@ class PnpApplicationTests {
     }
 
     @Test
-    void saveProposal() throws Exception {
+    void saveProposalTest() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.post("/proposal/user/1/team/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Proposal("new P")));
@@ -137,7 +145,7 @@ class PnpApplicationTests {
     }
 
     @Test
-    void saveProposalFail() throws Exception {
+    void saveProposalTestFail() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.post("/proposal/user/1/team/20")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new Proposal("new P")));
@@ -147,6 +155,19 @@ class PnpApplicationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("xxxxxxxxx");
         mockMvc.perform(request).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void deleteProposalTest() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.delete("/proposal/3");
+        mockMvc.perform(request).andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    void deleteProposalFail() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.delete("/proposal/50");
+        mockMvc.perform(request).andExpect(status().isNoContent());
     }
 
     //Proposal Controller tests END =================================================
