@@ -1,6 +1,7 @@
 package com.masonwang.pnp.web;
 
 import com.masonwang.pnp.entity.Proposal;
+import com.masonwang.pnp.exception.ErrorResponse;
 import com.masonwang.pnp.service.ProposalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -24,7 +25,7 @@ public class ProposalController {
 
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "Successful retrieval of the proposal by id", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
-            @ApiResponse(responseCode = "404", description = "Proposal does not exist"),
+            @ApiResponse(responseCode = "404", description = "Proposal does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
     })
     @Operation(summary = "Get proposal by id", description = "Return a proposal based on an id")
     @GetMapping("/{id}")
