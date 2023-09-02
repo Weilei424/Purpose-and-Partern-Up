@@ -121,6 +121,13 @@ class PnpApplicationTests {
 				.andExpect(jsonPath("$.name").value(proposals[0].getName()));
 	}
 
+	@Test
+	void getProposalTestFail() throws Exception {
+		RequestBuilder request = MockMvcRequestBuilders.get("/proposal/500");
+		mockMvc.perform(request)
+				.andExpect(status().isNotFound());
+	}
+
 	//Proposal Controller tests END =================================================
 
 
