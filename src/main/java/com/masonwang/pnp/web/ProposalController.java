@@ -24,26 +24,28 @@ import java.util.List;
 public class ProposalController {
     private ProposalService proposalService;
 
+    @Operation(summary = "Get proposal by id", description = "Return a proposal based on an id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful retrieval of the proposal by id", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
             @ApiResponse(responseCode = "404", description = "Proposal does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
     })
-    @Operation(summary = "Get proposal by id", description = "Return a proposal based on an id")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> getProposal(@PathVariable Long id) {
         return new ResponseEntity<>(proposalService.getProposal(id), HttpStatus.OK);
     }
 
+    @Operation(summary = "Save a proposal", description = "Save proposal with required info")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successful save of the proposal"),
             @ApiResponse(responseCode = "404", description = "Team or/and User id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
     })
-    @Operation(summary = "Save a proposal", description = "Save proposal with required info")
     @PostMapping(value = "/user/{userId}/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @PathVariable Long teamId, @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.saveProposal(userId, teamId, proposal), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Delete a proposal", description = "Delete a proposal by proposal id")
+    @ApiResponse(responseCode = "204", description = "Deletion done (no deletion will happen if id does not exist)")
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> deleteProposal(@PathVariable Long id) {
         proposalService.deleteProposal(id);
@@ -51,6 +53,11 @@ public class ProposalController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Operation(summary = "Delete a proposal", description = "Delete a proposal by proposal id and user id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Successful deletion of proposal"),
+            @ApiResponse(responseCode = "404", description = "User id does not exist", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))),
+    })
     @DeleteMapping(value = "/{proposalId}/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> deleteUserProposal(@PathVariable Long proposalId, @PathVariable Long userId) {
         proposalService.deleteUserProposal(proposalId, userId);
