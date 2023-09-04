@@ -4,9 +4,15 @@ import com.masonwang.pnp.entity.Proposal;
 import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +24,11 @@ import java.util.Set;
 public class UserController {
     private UserService userService;
 
+    @Operation(summary = "Get user by id", description = "Get user by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful retrieval of user by id", content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "404", description = "User id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
