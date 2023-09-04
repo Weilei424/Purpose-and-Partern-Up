@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUserPassword(Long id, String password) {
         User u = getUser(id);
+        //todo check pw
         u.setPassword(password);
         return userRepository.save(u);
     }
