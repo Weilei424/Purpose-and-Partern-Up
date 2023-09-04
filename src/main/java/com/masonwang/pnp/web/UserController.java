@@ -34,11 +34,18 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get user by username", description = "Get user by username")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful retrieval of user by username", content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "404", description = "Username does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
     @GetMapping("/username")
     public ResponseEntity<User> getUserByUsername(@RequestBody String username) {
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
+    @Operation(summary = "Save an user", description = "Save user with valid info")
+    @ApiResponse(responseCode = "201", description = "Successful save of user", content = @Content(schema = @Schema(implementation = User.class)))
     @PostMapping
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
