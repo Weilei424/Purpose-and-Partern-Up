@@ -5,6 +5,7 @@ import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -45,7 +46,7 @@ public class TeamController {
         return new ResponseEntity<>(teamService.getTeamByName(name), HttpStatus.OK);
     }
 
-    @Operation(summary = "Save a team", description = "Save user with valid info")
+    @Operation(summary = "Save a team", description = "Save user with valid info (creator will be automatically added to the team)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successful save of team", content = @Content(schema = @Schema(implementation = Team.class))),
             @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = com.masonwang.pnp.exception.ErrorResponse.class))),
@@ -63,38 +64,73 @@ public class TeamController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/{id}")
+    @Operation(summary = "Update a team", description = "Update a team as a whole team")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful update of team", content = @Content(schema = @Schema(implementation = Team.class))),
+            @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team team) {
         return new ResponseEntity<>(teamService.updateTeam(id, team), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/name")
+    @Operation(summary = "Update a team name", description = "Update a team's name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful update of team name", content = @Content(schema = @Schema(implementation = Team.class))),
+            @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @PutMapping(value = "/{id}/name", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> updateTeamName(@PathVariable Long id, @RequestBody Team team) {
         return new ResponseEntity<>(teamService.updateTeamName(id, team.getName()), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/contact")
+    @Operation(summary = "Update a team contact", description = "Update a team's contact'")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful update of team contact", content = @Content(schema = @Schema(implementation = Team.class))),
+            @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @PutMapping(value = "/{id}/contact", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> updateTeamContact(@PathVariable Long id, @RequestBody Team team) {
         return new ResponseEntity<>(teamService.updateTeamContact(id, team.getContact()), HttpStatus.OK);
     }
 
-    @PutMapping("/{teamId}/user/{userId}")
+    @Operation(summary = "Add user to team", description = "Add an existing user to an existing team by ids")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful addition of user to team", content = @Content(schema = @Schema(implementation = Team.class))),
+            @ApiResponse(responseCode = "404", description = "Invalid input id(s)", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @PutMapping(value = "/{teamId}/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> addMember(@PathVariable Long teamId, @PathVariable Long userId) {
         return new ResponseEntity<>(teamService.addMember(teamId, userId), HttpStatus.OK);
     }
 
+    @Operation(summary = "Delete a team member", description = "Delete a member from team")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful removal of an user from a team"),
+            @ApiResponse(responseCode = "404", description = "Invalid input or user/team does not match", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
     @DeleteMapping("/{teamId}/user/{userId}")
     public ResponseEntity<HttpStatus> deleteMember(@PathVariable Long teamId, @PathVariable Long userId) {
         teamService.deleteMember(teamId, userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{id}/proposals")
+    @Operation(summary = "Get all proposals of the team", description = "Get all proposals of the team by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful retrieval of all proposals of the team", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Proposal.class)))),
+            @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @GetMapping(value = "/{id}/proposals", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Proposal>> getTeamProposals(@PathVariable Long id) {
         return new ResponseEntity<>(teamService.getTeamProposals(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/users")
+    @Operation(summary = "Get all users of the team", description = "Get all users of the team by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful retrieval of all users of the team", content = @Content(array = @ArraySchema(schema = @Schema(implementation = User.class)))),
+            @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+    })
+    @GetMapping(value = "/{id}/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<User>> getTeamUsers(@PathVariable Long id) {
         return new ResponseEntity<>(teamService.getTeamUsers(id), HttpStatus.OK);
     }
