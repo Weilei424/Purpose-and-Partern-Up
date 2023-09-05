@@ -38,6 +38,7 @@ public class ProposalController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successful save of the proposal", content = @Content(schema = @Schema(implementation = Proposal.class))),
             @ApiResponse(responseCode = "404", description = "Team or/and User id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping(value = "/user/{userId}/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @PathVariable Long teamId, @RequestBody Proposal proposal) {
