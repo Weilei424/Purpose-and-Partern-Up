@@ -47,7 +47,10 @@ public class TeamController {
     }
 
     @Operation(summary = "Save a team", description = "Save user with valid info")
-    @ApiResponse(responseCode = "201", description = "Successful save of team", content = @Content(schema = @Schema(implementation = Team.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successful save of team", content = @Content(schema = @Schema(implementation = Team.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = com.masonwang.pnp.exception.ErrorResponse.class))),
+    })
     @PostMapping("/addBy/{teamId}")
     public ResponseEntity<Team> saveTeam(@PathVariable Long teamId, @RequestBody Team team) {
         return new ResponseEntity<>(teamService.saveTeam(teamId, team), HttpStatus.CREATED);
