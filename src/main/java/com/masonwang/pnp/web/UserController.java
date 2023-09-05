@@ -87,13 +87,12 @@ public class UserController {
     }
 
     @Operation(summary = "Delete an user", description = "Delete an user by id")
-    @ApiResponse(responseCode = "200", description = "Successful deletion of user", content = @Content(schema = @Schema(implementation = User.class)))
-    @DeleteMapping("/{id}")
+    @ApiResponse(responseCode = "200", description = "Successful deletion of user")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
     @Operation(summary = "Get all users", description = "Get all users from the database")
     @ApiResponse(responseCode = "200", description = "Successful retrieval of all proposal from database", content = @Content(array = @ArraySchema(schema = @Schema(implementation = User.class))))

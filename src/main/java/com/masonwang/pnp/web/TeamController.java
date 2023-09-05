@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
 import java.util.Set;
 
@@ -51,11 +50,13 @@ public class TeamController {
             @ApiResponse(responseCode = "201", description = "Successful save of team", content = @Content(schema = @Schema(implementation = Team.class))),
             @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = com.masonwang.pnp.exception.ErrorResponse.class))),
     })
-    @PostMapping("/addBy/{teamId}")
+    @PostMapping(value = "/addBy/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> saveTeam(@PathVariable Long teamId, @RequestBody Team team) {
         return new ResponseEntity<>(teamService.saveTeam(teamId, team), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Delete a team", description = "Delete a team by id")
+    @ApiResponse(responseCode = "204", description = "Successful deletion of team (no deletion will happen if id does not exist)")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTeam(@PathVariable Long id) {
         teamService.deleteTeam(id);
