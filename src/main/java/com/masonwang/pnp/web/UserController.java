@@ -47,7 +47,10 @@ public class UserController {
     }
 
     @Operation(summary = "Save an user", description = "Save user with valid info")
-    @ApiResponse(responseCode = "201", description = "Successful save of user", content = @Content(schema = @Schema(implementation = User.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successful save of user", content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = com.masonwang.pnp.exception.ErrorResponse.class))),
+    })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
