@@ -18,7 +18,6 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @NotBlank(message = "Team name cannot be blank!")
