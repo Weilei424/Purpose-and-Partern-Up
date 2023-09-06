@@ -71,6 +71,7 @@ public class TeamServiceImpl implements TeamService {
         User user = UserServiceImpl.unwrapUser(userRepository.findById(userId), userId);
         user.getTeams().add(team);
         team.getUsers().add(user);
+        //todo not working
         return teamRepository.save(team);
     }
 

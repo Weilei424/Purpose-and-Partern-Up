@@ -102,6 +102,7 @@ public class TeamController {
     })
     @PutMapping(value = "/{teamId}/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> addMember(@PathVariable Long teamId, @PathVariable Long userId) {
+        //todo not working
         return new ResponseEntity<>(teamService.addMember(teamId, userId), HttpStatus.OK);
     }
 
