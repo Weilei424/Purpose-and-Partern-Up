@@ -46,14 +46,15 @@ public class TeamController {
         return new ResponseEntity<>(teamService.getTeamByName(name), HttpStatus.OK);
     }
 
-    @Operation(summary = "Save a team", description = "Save user with valid info (creator will be automatically added to the team)")
+    @Operation(summary = "Save a team", description = "Save team under an user with valid info (creator will be automatically added to the team)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successful save of team", content = @Content(schema = @Schema(implementation = Team.class))),
             @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = com.masonwang.pnp.exception.ErrorResponse.class))),
     })
-    @PostMapping(value = "/addBy/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Team> saveTeam(@PathVariable Long teamId, @RequestBody Team team) {
-        return new ResponseEntity<>(teamService.saveTeam(teamId, team), HttpStatus.CREATED);
+    @PostMapping(value = "/addBy/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Team> saveTeam(@PathVariable Long userId, @RequestBody Team team) {
+
+        return new ResponseEntity<>(teamService.saveTeam(team), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Delete a team", description = "Delete a team by id")
@@ -133,5 +134,12 @@ public class TeamController {
     @GetMapping(value = "/{id}/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<User>> getTeamUsers(@PathVariable Long id) {
         return new ResponseEntity<>(teamService.getTeamUsers(id), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get all teams", description = "Get all teams from database")
+    @ApiResponse(responseCode = "200", description = "Successful retrieval of teams", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Team.class))))
+    @GetMapping("/all")
+    public ResponseEntity<List<Team>> getTeams() {
+        return new ResponseEntity<>(teamService.getTeams(), HttpStatus.OK);
     }
 }

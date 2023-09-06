@@ -18,9 +18,9 @@ import java.util.Set;
 @AllArgsConstructor
 @Service
 public class TeamServiceImpl implements TeamService {
-    private TeamRepository teamRepository;
-    private UserRepository userRepository;
-    private ProposalRepository proposalRepository;
+    TeamRepository teamRepository;
+    UserRepository userRepository;
+    ProposalRepository proposalRepository;
 
     @Override
     public Team getTeam(Long id) {
@@ -34,10 +34,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team saveTeam(Long userId, Team team) {
-        User user = UserServiceImpl.unwrapUser(userRepository.findById(userId), userId);
-        team.getUsers().add(user);
-        user.getTeams().add(team);
+    public Team saveTeam(Team team) {
         return teamRepository.save(team);
     }
 
@@ -72,8 +69,8 @@ public class TeamServiceImpl implements TeamService {
     public Team addMember(Long teamId, Long userId) {
         Team team = getTeam(teamId);
         User user = UserServiceImpl.unwrapUser(userRepository.findById(userId), userId);
+        user.getTeams().add(team);
         team.getUsers().add(user);
-
         return teamRepository.save(team);
     }
 
@@ -82,7 +79,6 @@ public class TeamServiceImpl implements TeamService {
         Team team = getTeam(teamId);
         User user = UserServiceImpl.unwrapUser(userRepository.findById(userId), userId);
         if (!team.getUsers().remove(user)) throw new EntitiesNotMatchException(userId, User.class, teamId, Team.class);
-        teamRepository.save(team);
     }
 
     @Override
@@ -93,8 +89,12 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Set<User> getTeamUsers(Long id) {
         Team team = getTeam(id);
-
         return team.getUsers();
+    }
+
+    @Override
+    public List<Team> getTeams() {
+        return (List<Team>) teamRepository.findAll();
     }
 
     static Team unwrapTeam(Optional<Team> entity, Long id) {
