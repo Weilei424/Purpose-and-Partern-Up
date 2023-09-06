@@ -16,8 +16,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private ProposalRepository proposalRepository;
+    UserRepository userRepository;
+    ProposalRepository proposalRepository;
 
     @Override
     public User getUser(Long id) {

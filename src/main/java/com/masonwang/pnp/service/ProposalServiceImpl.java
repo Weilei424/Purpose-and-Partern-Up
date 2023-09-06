@@ -17,9 +17,9 @@ import java.util.Optional;
 @Service
 public class ProposalServiceImpl implements ProposalService {
 
-    private ProposalRepository proposalRepository;
-    private UserRepository userRepository;
-    private TeamRepository teamRepository;
+    ProposalRepository proposalRepository;
+    UserRepository userRepository;
+    TeamRepository teamRepository;
 
     @Override
     public Proposal getProposal(Long id) {
