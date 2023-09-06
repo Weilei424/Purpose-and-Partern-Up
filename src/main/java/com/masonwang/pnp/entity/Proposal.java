@@ -9,7 +9,9 @@ import lombok.*;
 @Entity
 @RequiredArgsConstructor
 @NoArgsConstructor
-@Table(name = "proposal")
+@Table(name = "proposal", uniqueConstraints={
+        @UniqueConstraint(columnNames = {"team_id", "user_id"})
+})
 public class Proposal {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
