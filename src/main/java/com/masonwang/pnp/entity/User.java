@@ -42,12 +42,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Proposal> proposals;
 
+
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "team_user",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id")
-    )
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "users")
     private Set<Team> teams;
 }
