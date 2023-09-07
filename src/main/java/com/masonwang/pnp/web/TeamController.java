@@ -53,7 +53,7 @@ public class TeamController {
     })
     @PostMapping(value = "/addBy/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> saveTeam(@PathVariable Long userId, @RequestBody Team team) {
-
+        //todo figure out how to add member in this method
         return new ResponseEntity<>(teamService.saveTeam(team), HttpStatus.CREATED);
     }
 
