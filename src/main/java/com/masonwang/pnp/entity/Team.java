@@ -22,7 +22,7 @@ public class Team {
 
     @NotBlank(message = "Team name cannot be blank!")
     @NonNull
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "Contact")
