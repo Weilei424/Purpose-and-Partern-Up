@@ -11,6 +11,7 @@ import com.masonwang.pnp.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -34,7 +35,11 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team saveTeam(Team team) {
+    public Team saveTeam(Team team, User user) {
+        team.setUsers(new HashSet<>());
+        team.getUsers().add(user);
+        user.getTeams().add(team);
+        userRepository.save(user);
         return teamRepository.save(team);
     }
 

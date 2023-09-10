@@ -4,6 +4,7 @@ import com.masonwang.pnp.entity.Proposal;
 import com.masonwang.pnp.entity.Team;
 import com.masonwang.pnp.entity.User;
 import com.masonwang.pnp.service.TeamService;
+import com.masonwang.pnp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,6 +26,7 @@ import java.util.Set;
 @RequestMapping("/team")
 public class TeamController {
     private TeamService teamService;
+    private UserService userService;
 
     @Operation(summary = "Get team by id", description = "Get team by id")
     @ApiResponses(value = {
@@ -53,8 +55,9 @@ public class TeamController {
     })
     @PostMapping(value = "/addBy/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Team> saveTeam(@PathVariable Long userId, @RequestBody Team team) {
-        //todo figure out how to add member in this method
-        return new ResponseEntity<>(teamService.saveTeam(team), HttpStatus.CREATED);
+        User user = userService.getUser(userId);
+
+        return new ResponseEntity<>(teamService.saveTeam(team, user), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Delete a team", description = "Delete a team by id")
