@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,7 +42,7 @@ public class ProposalController {
             @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PostMapping(value = "/user/{userId}/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @PathVariable Long teamId, @RequestBody Proposal proposal) {
+    public ResponseEntity<Proposal> saveProposal(@PathVariable Long userId, @PathVariable Long teamId, @Valid @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.saveProposal(userId, teamId, proposal), HttpStatus.CREATED);
     }
 
@@ -72,7 +73,7 @@ public class ProposalController {
             @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Proposal> updateProposal(@PathVariable Long id, @RequestBody Proposal proposal) {
+    public ResponseEntity<Proposal> updateProposal(@PathVariable Long id, @Valid @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposal(id, proposal), HttpStatus.OK);
     }
 
@@ -82,7 +83,7 @@ public class ProposalController {
             @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/name", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Proposal> updateProposalName(@PathVariable Long id, @RequestBody Proposal proposal) {
+    public ResponseEntity<Proposal> updateProposalName(@PathVariable Long id, @Valid @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposalName(id, proposal.getName()), HttpStatus.OK);
     }
 
@@ -92,7 +93,7 @@ public class ProposalController {
             @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/description", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Proposal> updateProposalDescription(@PathVariable Long id, @RequestBody Proposal proposal) {
+    public ResponseEntity<Proposal> updateProposalDescription(@PathVariable Long id, @Valid @RequestBody Proposal proposal) {
         return new ResponseEntity<>(proposalService.updateProposalDescription(id, proposal.getDescription()), HttpStatus.OK);
     }
 
@@ -102,7 +103,7 @@ public class ProposalController {
             @ApiResponse(responseCode = "404", description = "Proposal id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/team", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Proposal> updateProposalTeam(@PathVariable Long id, @RequestBody Proposal proposal) {
+    public ResponseEntity<Proposal> updateProposalTeam(@PathVariable Long id, @Valid @RequestBody Proposal proposal) {
         //todo unfinished
         return new ResponseEntity<>(proposalService.updateProposalTeam(id, proposal.getTeam()), HttpStatus.OK);
     }

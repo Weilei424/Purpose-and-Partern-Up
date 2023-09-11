@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,7 +55,7 @@ public class TeamController {
             @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = com.masonwang.pnp.exception.ErrorResponse.class))),
     })
     @PostMapping(value = "/addBy/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Team> saveTeam(@PathVariable Long userId, @RequestBody Team team) {
+    public ResponseEntity<Team> saveTeam(@PathVariable Long userId, @Valid @RequestBody Team team) {
         User user = userService.getUser(userId);
 
         return new ResponseEntity<>(teamService.saveTeam(team, user), HttpStatus.CREATED);
@@ -74,7 +75,7 @@ public class TeamController {
             @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @RequestBody Team team) {
+    public ResponseEntity<Team> updateTeam(@PathVariable Long id, @Valid @RequestBody Team team) {
         return new ResponseEntity<>(teamService.updateTeam(id, team), HttpStatus.OK);
     }
 
@@ -84,7 +85,7 @@ public class TeamController {
             @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/name", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Team> updateTeamName(@PathVariable Long id, @RequestBody Team team) {
+    public ResponseEntity<Team> updateTeamName(@PathVariable Long id, @Valid @RequestBody Team team) {
         return new ResponseEntity<>(teamService.updateTeamName(id, team.getName()), HttpStatus.OK);
     }
 
@@ -94,7 +95,7 @@ public class TeamController {
             @ApiResponse(responseCode = "404", description = "Invalid team id", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/contact", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Team> updateTeamContact(@PathVariable Long id, @RequestBody Team team) {
+    public ResponseEntity<Team> updateTeamContact(@PathVariable Long id, @Valid @RequestBody Team team) {
         return new ResponseEntity<>(teamService.updateTeamContact(id, team.getContact()), HttpStatus.OK);
     }
 

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,7 +53,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid json", content = @Content(schema = @Schema(implementation = com.masonwang.pnp.exception.ErrorResponse.class))),
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
+    public ResponseEntity<User> saveUser(@Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
@@ -62,7 +63,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);
     }
 
@@ -72,7 +73,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/pw", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUserPassword(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUserPassword(@PathVariable Long id, @Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.updateUserPassword(id, user.getPassword()), HttpStatus.OK);
     }
 
@@ -82,7 +83,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User id does not exist", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
     })
     @PutMapping(value = "/{id}/contact", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUserContact(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUserContact(@PathVariable Long id, @Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.updateUserContact(id, user.getContact()), HttpStatus.OK);
     }
 
