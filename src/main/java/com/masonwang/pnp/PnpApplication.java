@@ -1,8 +1,12 @@
 package com.masonwang.pnp;
 
+import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@AllArgsConstructor
 @SpringBootApplication
 public class PnpApplication {
 
@@ -10,4 +14,8 @@ public class PnpApplication {
 		SpringApplication.run(PnpApplication.class, args);
 	}
 
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
